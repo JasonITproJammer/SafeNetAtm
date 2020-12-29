@@ -1,0 +1,35 @@
+﻿<div class="text-center">
+    <div class="row">
+        <div class="col-md-4">
+            <button id="btnCheckBalance" 
+                    class="btn btn-primary">Check Balance</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary">Withdraw</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary">Check Denomination Balance</button>
+        </div>
+    </div>
+    <div class="row">
+        <div id="display" class="col-md-12"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@ViewBag.Error' == 'True') {
+            var msg = '@Html.Raw(ViewBag.ErrorMessasge)';
+            ErrorAlert('indexErrMsg', msg);
+        }
+
+        $('#btnCheckBalance').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("CurrentBalance")',
+                success: function (result) {
+                    $('#display').html(result);
+                }
+            });
+        });
+    });
+</script>
