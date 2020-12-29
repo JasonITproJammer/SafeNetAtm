@@ -1,35 +1,92 @@
-﻿<div class="text-center">
+﻿<div id="divHomeIndex">
+    @Html.AntiForgeryToken()
+    <input id="urlCurrentBalance" type="hidden" value="@Url.Action("CurrentBalance")" />
+    <input id="urlDenominationBalance" type="hidden" value="@Url.Action("DenominationBalance")" />
+    <input id="urlWithdraw" type="hidden" value="@Url.Action("Withdraw")" />
+    <input id="urlRestock" type="hidden" value="@Url.Action("Restock")" />
     <div class="row">
-        <div class="col-md-4">
-            <button id="btnCheckBalance" 
-                    class="btn btn-primary">Check Balance</button>
+        <div id="colAction" class="col-md-6">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <select id="ddlAtmAction" class="form-control w-100">
+                        <option id="optSelect" value="S">Select...</option>
+                        <option id="optBalance" value="B">Check Balance</option>
+                        <option id="optDenomBalance" value="I">Check Denomination(s) Balance</option>
+                        <option id="optWithdraw" value="W">Withdraw</option>
+                        <option id="optRestock" value="R">Restock Machine</option>
+                    </select>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+            <div id="divDenomBalance" class="row" style="padding-top:10px;">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 text-center">
+                    <select multiple size="6" id="ddlDenoms" class="form-control w-100 h-100"
+                        data-toggle="tooltip" data-placement="right" 
+                        title="Hold CTRL to select more than one">
+                            <option value="100">$100</option>
+                            <option value="50">$50</option>
+                            <option value="20">$20</option>
+                            <option value="10">$10</option>
+                            <option value="5">$5</option>
+                            <option value="1">$1</option>
+                        </select>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <div id="divWithdraw" class="row" style="padding-top:10px;">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control text-center w-100" id="numWithdraw" name="numWithdraw" 
+                           data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 
+                                'digits': 0, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'">
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <div class="row" style="padding-top:10px;">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button id="btnSubmit" class="btn btn-primary w-100">Submit</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary">Withdraw</button>
+        <div id="colResults" class="col-md-6" style="padding-top:10px;">
+            @*This is where the partial views are displayed*@
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary">Check Denomination Balance</button>
-        </div>
-    </div>
-    <div class="row">
-        <div id="display" class="col-md-12"></div>
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('input').inputmask();
+        $('[data-toggle="tooltip"]').tooltip(); 
+        $("#divDenomBalance").hide();
+        $("#divWithdraw").hide();
         if ('@ViewBag.Error' == 'True') {
-            var msg = '@Html.Raw(ViewBag.ErrorMessasge)';
-            ErrorAlert('indexErrMsg', msg);
+            var msg = '@Html.Raw(ViewBag.ErrorMessage)';
+            Alert('indexErrMsg', msg, "danger");
         }
 
-        $('#btnCheckBalance').click(function () {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("CurrentBalance")',
-                success: function (result) {
-                    $('#display').html(result);
-                }
-            });
+        $("#ddlAtmAction").change(function () {
+            var selOption = $('#ddlAtmAction').find(":selected").val();
+            $("#divDenomBalance").hide();
+            $("#divWithdraw").hide();
+            switch (selOption) {
+                case "I":
+                    $("#divDenomBalance").show();
+                    break;
+                case "W":
+                    $("#divWithdraw").show();
+                    break;
+            }
+        });
+
+        $('#btnSubmit').click(function () {
+            AtmActionChange();
         });
     });
 </script>

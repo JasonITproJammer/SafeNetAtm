@@ -1,10 +1,8 @@
 using System;
 using Xunit;
-using SafeNetAtm.Models;
 using Microsoft.EntityFrameworkCore;
 using SafeNetAtm.Data;
 using SafeNetAtm.Domain;
-using System.Collections.Generic;
 
 namespace SafeNetAtm.Tests
 {

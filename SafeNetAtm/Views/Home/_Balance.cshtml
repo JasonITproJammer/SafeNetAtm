@@ -1,0 +1,35 @@
+﻿@model SafeNetAtm.Models.AtmViewModel
+<div id="divBalance">
+    <table id="tblBalance" class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Denomination</th>
+                <th scope="col">Bills</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.InventoryList != null && Model.InventoryList.Count() > 0)
+            {
+                foreach (var item in Model.InventoryList)
+                {
+                    <tr>
+                        <td>$ @item.Denomination</td>
+                        <td>@item.BillQuantity</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @if (ViewBag.Error == true)
+    {
+        <input type="hidden" id="errorFlag" value="error" />
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@ViewBag.Error' == 'True') {
+            var msg = '@Html.Raw(ViewBag.ErrorMessage)';
+            Alert('balanceErrMsg', msg, "danger");
+        }
+    });
+</script>

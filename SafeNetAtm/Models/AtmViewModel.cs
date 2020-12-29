@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SafeNetAtm.Data;
+﻿using System.Collections.Generic;
 using SafeNetAtm.Domain;
 
 namespace SafeNetAtm.Models
