@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SafeNetAtm.Models;
+using SafeNetAtm.Domain;
 
 namespace SafeNetAtm.Controllers
 {
@@ -31,22 +32,65 @@ namespace SafeNetAtm.Controllers
 
         public IActionResult CurrentBalance()
         {
-            var model = new AtmViewModel
+            var model = new AtmViewModel();
+            try
             {
-                InventoryList = _atmRepository.Balance
-            };
+                model.InventoryList = _atmRepository.Balance;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = ex.Message;
+            }
             return PartialView("_CurrentBalance",model);
         }
 
-        public IActionResult Withdraw(int amount)
+        public IActionResult Withdraw(AtmViewModel model)
         {
-            AtmViewModel model = new AtmViewModel
+            try
             {
-                WithdrawalAmount = amount
-            };
-            _atmRepository.Withdraw(model.WithdrawalAmount);
-            model.InventoryList = _atmRepository.Balance;
+                _atmRepository.Withdraw(model.WithdrawalAmount);
+                model.InventoryList = _atmRepository.Balance;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = ex.Message;
+            }
             return PartialView("_Withdraw", model);
+        }
+
+        public IActionResult DenominationBalance(AtmViewModel model)
+        {
+            try
+            {
+                model.InventoryList = new List<Inventory>();
+                foreach (var d in model.Denomination)
+                {
+                    model.InventoryList.Append(_atmRepository.DenominationBalance(d));
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = ex.Message;
+            }
+            return PartialView("_DenominationBalance", model);
+        }
+
+        public IActionResult Restock(AtmViewModel model)
+        {
+            try
+            {
+                _atmRepository.Restock();
+                model.InventoryList = _atmRepository.Balance;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = true;
+                ViewBag.ErrorMessage = ex.Message;
+            }
+            return PartialView("_Restock", model);
         }
     }
 }

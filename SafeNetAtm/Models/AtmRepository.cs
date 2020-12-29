@@ -32,20 +32,72 @@ namespace SafeNetAtm.Models
 
         public void Withdraw(int amount)
         {
-            var test = amount;
-            var denominationsList = _atmContext.Inventories.Where(x => x.BillQuantity > 0)
-                    .Select(x => x.Denomination).ToList();
-            foreach (var d in denominationsList)
+            try
             {
-                test = amount % d;
+                foreach (var item in _atmContext.Inventories
+                        .Where(x => x.BillQuantity > 0)
+                        .OrderByDescending(x => x.Denomination))
+                {
+                    while ((amount - item.Denomination) > -1 && item.BillQuantity > 0)
+                    {
+                        item.BillQuantity -= 1;
+                        amount -= item.Denomination;
+                    }
+                }
+
+                if (amount > 0)
+                {
+                    RollBack();
+                    throw new ArgumentException("Failure: insufficient funds");
+                }
+                else
+                {
+                    _atmContext.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                RollBack();
+                throw;
             }
         }
 
         public void Restock()
         {
-            var items = _atmContext.Inventories.Where(x => x.BillQuantity < 10).ToList();
-            items.ForEach(x => x.BillQuantity = 10);
-            _atmContext.SaveChanges();
+            try
+            {
+                _atmContext.Inventories.ToList().Where(x => x.BillQuantity < 10)
+                .ToList().ForEach(x => x.BillQuantity = 10);
+                _atmContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                RollBack();
+                throw;
+            }
+        }
+
+        private void RollBack()
+        {
+            var changedEntries = _atmContext.ChangeTracker.Entries()
+                .Where(x => x.State != EntityState.Unchanged).ToList();
+
+            foreach (var entry in changedEntries)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Modified:
+                        entry.CurrentValues.SetValues(entry.OriginalValues);
+                        entry.State = EntityState.Unchanged;
+                        break;
+                    case EntityState.Added:
+                        entry.State = EntityState.Detached;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Unchanged;
+                        break;
+                }
+            }
         }
     }
 }
