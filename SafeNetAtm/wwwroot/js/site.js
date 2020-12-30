@@ -1,5 +1,5 @@
 ﻿function Alert(alertID, msg, type) {
-    $("#" + alertID).alert("close");
+    $(".alert").alert("close");
     var html = "";
     html = "<div id='" + alertID + "' class='alert alert-" + type
         + " alert-dismissible w-100' style='display:none;margin-bottom:0px;'>";

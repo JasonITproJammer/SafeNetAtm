@@ -72,6 +72,7 @@
         }
 
         $("#ddlAtmAction").change(function () {
+            $(".alert").alert("close");
             var selOption = $('#ddlAtmAction').find(":selected").val();
             $("#divDenomBalance").hide();
             $("#divWithdraw").hide();
