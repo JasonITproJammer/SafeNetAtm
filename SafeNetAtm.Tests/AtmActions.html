@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>AtmActions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DenomBalance</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>https://localhost:44365/<datalist><option>https://localhost:44365/</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=ddlAtmAction<datalist><option>id=ddlAtmAction</option><option>//select[@id='ddlAtmAction']</option><option>//div[@id='colAction']/div/div[2]/select</option><option>//select</option><option>css=#ddlAtmAction</option></datalist></td><td></td>
+</tr>
+<tr><td>select</td><td>id=ddlAtmAction<datalist><option>id=ddlAtmAction</option><option>//select[@id='ddlAtmAction']</option><option>//div[@id='colAction']/div/div[2]/select</option><option>//select</option><option>css=#ddlAtmAction</option></datalist></td><td>label=Check Denomination(s) Balance</td>
+</tr>
+<tr><td>click</td><td>id=ddlAtmAction<datalist><option>id=ddlAtmAction</option><option>//select[@id='ddlAtmAction']</option><option>//div[@id='colAction']/div/div[2]/select</option><option>//select</option><option>css=#ddlAtmAction</option></datalist></td><td></td>
+</tr>
+<tr><td>addSelection</td><td>id=ddlDenoms<datalist><option>id=ddlDenoms</option><option>//select[@id='ddlDenoms']</option><option>//div[@id='divDenomBalance']/div[2]/select</option><option>//div[2]/div[2]/select</option><option>css=#ddlDenoms</option></datalist></td><td>label=$50</td>
+</tr>
+<tr><td>addSelection</td><td>id=ddlDenoms<datalist><option>id=ddlDenoms</option><option>//select[@id='ddlDenoms']</option><option>//div[@id='divDenomBalance']/div[2]/select</option><option>//div[2]/div[2]/select</option><option>css=#ddlDenoms</option></datalist></td><td>label=$20</td>
+</tr>
+<tr><td>addSelection</td><td>id=ddlDenoms<datalist><option>id=ddlDenoms</option><option>//select[@id='ddlDenoms']</option><option>//div[@id='divDenomBalance']/div[2]/select</option><option>//div[2]/div[2]/select</option><option>css=#ddlDenoms</option></datalist></td><td>label=$10</td>
+</tr>
+<tr><td>click</td><td>id=ddlDenoms<datalist><option>id=ddlDenoms</option><option>//select[@id='ddlDenoms']</option><option>//div[@id='divDenomBalance']/div[2]/select</option><option>//div[2]/div[2]/select</option><option>css=#ddlDenoms</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnSubmit<datalist><option>id=btnSubmit</option><option>//button[@id='btnSubmit']</option><option>//div[@id='colAction']/div[4]/div[2]/button</option><option>//button</option><option>css=#btnSubmit</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Withdraw</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>https://localhost:44365/<datalist><option>https://localhost:44365/</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=ddlAtmAction<datalist><option>id=ddlAtmAction</option><option>//select[@id='ddlAtmAction']</option><option>//div[@id='colAction']/div/div[2]/select</option><option>//select</option><option>css=#ddlAtmAction</option></datalist></td><td></td>
+</tr>
+<tr><td>select</td><td>id=ddlAtmAction<datalist><option>id=ddlAtmAction</option><option>//select[@id='ddlAtmAction']</option><option>//div[@id='colAction']/div/div[2]/select</option><option>//select</option><option>css=#ddlAtmAction</option></datalist></td><td>label=Withdraw</td>
+</tr>
+<tr><td>click</td><td>id=ddlAtmAction<datalist><option>id=ddlAtmAction</option><option>//select[@id='ddlAtmAction']</option><option>//div[@id='colAction']/div/div[2]/select</option><option>//select</option><option>css=#ddlAtmAction</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=numWithdraw<datalist><option>id=numWithdraw</option><option>name=numWithdraw</option><option>//input[@id='numWithdraw']</option><option>//div[@id='divWithdraw']/div[2]/input</option><option>//div[2]/input</option><option>css=#numWithdraw</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnSubmit<datalist><option>id=btnSubmit</option><option>//button[@id='btnSubmit']</option><option>//div[@id='colAction']/div[4]/div[2]/button</option><option>//button</option><option>css=#btnSubmit</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=SuccessWithdraw<datalist><option>id=SuccessWithdraw</option><option>//div[@id='SuccessWithdraw']</option><option>//div[@id='divGeneralAffixMSG']/div</option><option>//div[2]/div</option><option>css=#SuccessWithdraw</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
