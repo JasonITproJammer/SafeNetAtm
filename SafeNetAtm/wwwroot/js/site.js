@@ -12,17 +12,20 @@
 function AtmActionChange() {
     var errMsg = "none";
     var selOption = $('#ddlAtmAction').find(":selected").val();
-    switch (selOption) {
-        case "I":
-            var test = $('#ddlDenoms').val();
-            if (test.length < 1) {
-                errMsg = "You must select at least one denomination.";
-            }
-            break;
-        default:
-            errMsg = "Invalid drop down item chosen.";
+
+    //Validate input
+    if (selOption != "W" && selOption != "B"
+        && selOption != "I" && selOption != "R") {
+        errMsg = "Invalid drop down item chosen.";
+    }
+    else if (selOption == "I") {
+        var test = $('#ddlDenoms').val();
+        if (test.length < 1) {
+            errMsg = "You must select at least one denomination.";
+        }
     }
 
+    //process request if validations pass
     if (errMsg == "none") {
         var antiForgeryToken = $('#divHomeIndex input[name="__RequestVerificationToken"]').val();
         $("#colResults").empty();
